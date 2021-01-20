@@ -1,0 +1,33 @@
+<html>
+<head>
+<link rel="stylesheet" href="styles/login.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+<body>
+<div id="page">
+    <img id = "logo" src="/images/logo.png">
+    <div id="formWindow">
+        <div id="centerElement">
+            <h1> Register</h1>
+            
+            <form action = "/register" method = "POST">
+                <div>
+                    <input type = "text" class = "textInput" name = "name" placeholder="name" required>
+                </div>
+                <div>
+                    <input type = "email" class = "textInput" name = "email" placeholder="email" required>
+                </div>
+                <div>
+                    <input type = "text" class = "textInput" name = "password" placeholder="password" required>
+                </div>
+                <div style= "width: 10px; height: 10px;"></div>
+            <button class="button" type = "submit">Register</button>
+            </form>
+            <a href = "/login">Login</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+

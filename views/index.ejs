@@ -1,0 +1,144 @@
+<html>
+<head>
+<link rel="stylesheet" href="styles/app.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<body>
+<div id= "page">
+
+<img id= "logo" src = "images/logo.png">
+
+<form action = "/logout?_method=DELETE" method = "POST">
+    <button type = "submit" style = "float: right;"> Log Out</button>
+</form>
+
+<button id= "addButton"></button>
+
+<div id="addExpense" style="text-align:center;" onsubmit= "return false">
+    <form id= "addE">
+        <input type = "text" class = "textInput" id = "title" name = "title" placeholder= "Title" required>
+        <input type = "number" step="0.01" class = "textInput" id = "amount" name = "amount" placeholder= "Amount" required>
+        <input type = "date" class = "textInput" id = "date" name = "date" placeholder= "date" required>
+        <button type='submit' class = "button" id = "submit">Add Expense</button>
+    </form>
+</div>
+
+<div id= "dashboard">
+    <div class="cells">
+        <div class="cell" id="_0"></div>
+        <div class="cell" id="_1"></div>
+        <div class="cell" id="_2"></div>
+        <div class="cell" id="_3"></div>
+        <div class="cell" id="_4"></div>
+        <div class="cell" id="_5"></div>
+    </div>
+    
+
+    <div class="module">
+        <div class="expenses-list">
+            <div id="ELheader">
+                <button class = "maximize" id = "ELMAX">MAX</button>
+            </div>
+            <div id="ELcontent"></div>
+        </div>
+    </div>
+
+    <div class="module">
+        <div class="chart">
+            <button class = "maximize" id = "CMAX">MAX</button>
+            <div class="title">
+                <h2><b>Expense Ratio:</b></h2>
+            </div>
+            <div id="chartContainer">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="module">
+        <div id="networth">
+            <button class = "maximize" id = "NMAX">MAX</button>
+            <div class="title">
+                <h2><b>Your Balance:</b></h2>
+            </div>
+            <div id="balance-data"></div>
+        </div>
+    </div>
+
+    <div class="module">
+        <div id="evolution">
+            <button class = "maximize" id = "EMAX">MAX</button>
+            <div class="title">
+                <h2><b>Your Evolution:</b></h2>
+            </div>
+            <canvas id="evolutionChart"></canvas>
+        </div>
+    </div>
+    
+</div>
+</div>
+</body>
+
+<% var a = user; %>
+</head>
+
+
+<script src="libraries/jquery-3.5.1.min.js"></script>
+<script src="libraries/Chart.js"></script>
+
+<script src="variables.js"></script>
+<script src="scripts.js"></script>
+<script src="mouse.js"></script>
+<script src="update.js"></script>
+<script src="expense-list.js"></script>
+<script src="chart-window.js"></script>
+<script src="modules.js"></script>
+<script src="networth.js"></script>
+<script src="evolution.js"></script>
+
+<script>
+window.onload = function(){
+    document.getElementById("addExpense").style.display = "none"
+    createBlock()
+    updateDashboard()
+    chartWindow()
+    expenseWindow()
+    updateNetworth()
+}
+var user = <%- JSON.stringify(a) %>; 
+var expenses = user.expenses
+
+$(document).ready(function(){
+    $('#addE').submit(function(event){
+        console.log("opa")
+        var title = $("#title").val();
+        var amount = $("#amount").val();
+        var date = $("#date").val();
+        $.ajax({
+            method: 'POST',
+            url: "/index",
+            data: {title: title,
+                amount: amount,
+                value: 1,
+                date: date,
+                ajax: 1
+            },
+            success: function(status){
+                user = status
+                expenses = user.expenses
+                $("#test").val('')
+                createBlock()
+                chartData = []
+                chartLabels = []
+                
+                updateDashboard()
+                renderEvolutionChart(evolutionData, evolutionLabels);
+            }
+        })
+    })
+})
+
+    
+</script>
+</html>
+
