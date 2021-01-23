@@ -63,21 +63,9 @@ app.post('/index', async (req, res) => {
         req.user.expenses.splice(req.body.remove, 1)
         req.user.cont -= 1
     }
-    else if (req.body.eListLeft != undefined){
-        req.user.UI[0][0] = req.body.eListLeft
-        req.user.UI[0][1] = req.body.eListTop
-    }
-    else if (req.body.chartLeft != undefined){
-        req.user.UI[1][0] = req.body.chartLeft
-        req.user.UI[1][1] = req.body.chartTop
-    }
-    else if (req.body.networthLeft != undefined){
-        req.user.UI[2][0] = req.body.networthLeft
-        req.user.UI[2][1] = req.body.networthTop
-    }
-    else if (req.body.evolutionLeft != undefined){
-        req.user.UI[3][0] = req.body.evolutionLeft
-        req.user.UI[3][1] = req.body.evolutionTop
+    else if (req.body.windowLeft != undefined){
+        req.user.UI[req.body.windowType][0] = req.body.windowLeft
+        req.user.UI[req.body.windowType][1] = req.body.windowTop
     }
 
     if (req.body.ajax == undefined) res.render('index.ejs', {user: req.user})

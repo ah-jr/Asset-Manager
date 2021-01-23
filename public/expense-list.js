@@ -37,7 +37,6 @@ function expenseWindow(){
             window[0].style.left = "50%"
             window[0].zIndex = "20";
             UI.expenseFullscreen = true;
-            UI.expenseDraggable = false;
         }
         else{
             window[0].style.height = ""
@@ -46,7 +45,6 @@ function expenseWindow(){
             window[0].style.left = user.UI[0][0]
             window[0].zIndex = "1";
             UI.expenseFullscreen = false;
-            UI.expenseDraggable = true;
             showModules()
             setTimeout(() => {window[0].style.transition = "0s";}, 210);
         }

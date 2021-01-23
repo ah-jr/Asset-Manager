@@ -23,3 +23,30 @@ function updateNetworth(){
     $('#balance-data').empty()
     $('#balance-data').append(newBlock)
 }
+
+function networthWindow(){
+    $('#NMAX').click(function(event){
+        var window = document.getElementById("networth")
+        if (!UI.networthFullscreen)
+        {
+            hideModules(window.parentElement)
+            window.style.transition = "0.2s ease";
+            window.style.height = "98%"
+            window.style.width = "98%"
+            window.style.top = "50%"
+            window.style.left = "50%"
+            window.zIndex = "20";
+            UI.networthFullscreen = true;
+        }
+        else{
+            window.style.height = ""
+            window.style.width = "30%"
+            window.style.top = user.UI[2][1]
+            window.style.left = user.UI[2][0]
+            window.zIndex = "1";
+            UI.networthFullscreen = false;
+            showModules()
+            setTimeout(() => {window.style.transition = "0s";}, 210);
+        }
+    })
+}

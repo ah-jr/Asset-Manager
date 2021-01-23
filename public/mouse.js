@@ -17,8 +17,9 @@ addButton.onmouseup = function(){
 
 
 chart[0].onmousedown = function(e){
-    if(UI.chartDraggable){
-        chart[0].style.zIndex = "2"
+    dragType = 1;
+    if(!UI.chartFullscreen){
+        chart[0].style.zIndex = "3"
         dragValue = chart[0]
         oldPosition = [dragValue.offsetLeft, dragValue.offsetTop]
         xOffset = dragValue.offsetLeft - e.pageX ;
@@ -28,8 +29,9 @@ chart[0].onmousedown = function(e){
 }
 
 eList[0].onmousedown = function(e){
-    if(UI.expenseDraggable){
-        eList[0].style.zIndex = "2"
+    dragType = 0;
+    if(!UI.expenseFullscreen){
+        eList[0].style.zIndex = "3"
         dragValue = eList[0]
         oldPosition = [dragValue.offsetLeft, dragValue.offsetTop]
         xOffset = dragValue.offsetLeft - e.pageX ;
@@ -39,8 +41,9 @@ eList[0].onmousedown = function(e){
 }
 
 networth.onmousedown = function(e){
-    if(UI.networthDraggable){
-        networth.style.zIndex = "2"
+    dragType = 2;
+    if(!UI.networthFullscreen){
+        networth.style.zIndex = "3"
         dragValue = networth
         oldPosition = [dragValue.offsetLeft, dragValue.offsetTop]
         xOffset = dragValue.offsetLeft - e.pageX ;
@@ -50,8 +53,9 @@ networth.onmousedown = function(e){
 }
 
 evolution.onmousedown = function(e){
-    if(UI.evolutionDraggable){
-        evolution.style.zIndex = "2"
+    dragType = 3;
+    if(!UI.evolutionFullscreen){
+        evolution.style.zIndex = "3"
         dragValue = evolution
         oldPosition = [dragValue.offsetLeft, dragValue.offsetTop]
         xOffset = dragValue.offsetLeft - e.pageX ;
@@ -105,68 +109,22 @@ document.onmouseup = function(e){
             dragValue.style.top = oldPosition[1]
         } 
 
-
-
-        if(dragValue == eList[0]){
-            $.ajax({
-                method: 'POST',
-                url: "/index",
-                data: {
-                    eListLeft: dragValue.style.left,
-                    eListTop: dragValue.style.top,
-                    ajax: 1
-                },
-                success: function(status){
-                    user = status
-                    expenses = user.expenses
-                }
-            })
-        }
-        if(dragValue == chart[0]){
-            $.ajax({
-                method: 'POST',
-                url: "/index",
-                data: {
-                    chartLeft: dragValue.style.left,
-                    chartTop: dragValue.style.top,
-                    ajax: 1
-                },
-                success: function(status){
-                    user = status
-                    expenses = user.expenses
-                }
-            })
-        }
-        if(dragValue == networth){
-            $.ajax({
-                method: 'POST',
-                url: "/index",
-                data: {
-                    networthLeft: dragValue.style.left,
-                    networthTop: dragValue.style.top,
-                    ajax: 1
-                },
-                success: function(status){
-                    user = status
-                    expenses = user.expenses
-                }
-            })
-        }
-        if(dragValue == evolution){
-            $.ajax({
-                method: 'POST',
-                url: "/index",
-                data: {
-                    evolutionLeft: dragValue.style.left,
-                    evolutionTop: dragValue.style.top,
-                    ajax: 1
-                },
-                success: function(status){
-                    user = status
-                    expenses = user.expenses
-                }
-            })
-        }
+    
+        $.ajax({
+            method: 'POST',
+            url: "/index",
+            data: {
+                windowLeft: dragValue.style.left,
+                windowTop: dragValue.style.top,
+                windowType: dragType,
+                ajax: 1
+            },
+            success: function(status){
+                user = status
+                expenses = user.expenses
+            }
+        })
+    
         
         dragValue = null
         dragging = false
@@ -174,6 +132,4 @@ document.onmouseup = function(e){
     else{
         
     }
-
-    
 }

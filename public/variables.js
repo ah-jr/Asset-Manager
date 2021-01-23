@@ -10,19 +10,15 @@ var evolution = document.getElementById('evolution')
 
 
 class UIMode{
-    constructor(cF, eF, nF, evF, cD, eD, nD, evD){
+    constructor(cF, eF, nF, evF){
         this.chartFullscreen = cF;
         this.expenseFullscreen = eF;
         this.networthFullscreen = nF;
         this.evolutionFullscreen = evF;
-        this.chartDraggable = cD;
-        this.expenseDraggable = eD;
-        this.networthDraggable = nD;
-        this.evolutionDraggable = evD;
     }
 }
 
-var UI = new UIMode(false, false, false, false, true, true, true, true)
+var UI = new UIMode(false, false, false, false)
 
 var dragging = false
 
@@ -31,6 +27,6 @@ var chartColor = []
 var chartLabels = []
 
 var evolutionData = []
-var evolutionLabels =  ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+var evolutionLabels =  []
 
 var totalExpenses = 0
