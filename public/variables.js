@@ -25,6 +25,9 @@ var dragging = false
 var chartData = []
 var chartColor = []
 var chartLabels = []
+var pieChartValues = [];
+
+var ExpensePieChart = {};
 
 var evolutionData = []
 var evolutionLabels =  []

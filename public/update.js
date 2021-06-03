@@ -1,17 +1,30 @@
 function updateDashboard(){
     //Check to either show/hide modules:
-    if (expenses.length != 0){
+    if (user.expenses.length != 0){
         chart[0].style.display = "block"
         eList[0].style.display = "block"
         networth.style.display = "block"
         evolution.style.display = "block"
-        for(i = 0; i<expenses.length; i++){
-            if(expenses[i] != null){
+        pieChartValues = [];
+        for(i = 0; i<user.expenses.length; i++){
+            if(user.expenses[i] != null){
                 chartData.push(expenses[i].amount)
                 chartLabels.push(expenses[i].title)
                 chartColor.push("rgba(" + rand(255) + ", " + rand(255) + ", " + rand(255) + ", 1)")
+
+                var red   = Math.floor(Math.random() * 255);
+                var green = Math.floor(Math.random() * 255);
+                var blue  = Math.floor(Math.random() * 255);
+                //var color = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
+                var color = '#' + red.toString(16) + green.toString(16) + blue.toString(16);
+            
+                pieChartValues.push([expenses[i].amount, color])
             }
         }
+        ExpensePieChart.UpdateValues(pieChartValues);
+        ExpensePieChart.Paint();
+
+        console.log(user.expenses);
         
         //renderChart()
         updateNetworth()

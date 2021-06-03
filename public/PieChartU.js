@@ -17,65 +17,76 @@ class PieChart{
         function ClickEvent(e){
             var canvasCursorX = e.pageX - $('#' + element).offset().left;
             var canvasCursorY = e.pageY - $('#' + element).offset().top;
-            this.Paint(3, canvasCursorX, canvasCursorY);
+            this.Paint(canvasCursorX, canvasCursorY);
         }
     }
+
+    //==================================================================
+    //            Método: UpdateValue
+    //         Descrição: Recria o vetor de valores
+    //           Criação: 02/06/2021 Airton Junior
+    //==================================================================
     
+    UpdateValues(values){
+        this.values = values;
+    }
+
     //==================================================================
     //            Método: Paint
     //         Descrição: Realiza a pintura do PieChart
     //           Criação: 02/06/2021 Airton Junior
     //==================================================================
 
-    Paint(count, mouseX = 0, mouseY = 0){
+    Paint(mouseX = 0, mouseY = 0){
         var ctx = this.canvas.getContext('2d');
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        
-        var angle = (2/count)*Math.PI;
-        var start = 0;
-        var finish = angle;
-    
-        var selectedStart  = 0;
-        var selectedFinish = 0; 
+       
+        var size = this.values.length;
+        var total = 0;
 
-        var red, green, blue;
+        for (i=0;i<size;i++){
+           total = total + parseInt(this.values[i][0]); 
+        }
+
+        var minAngle = (2/total)*Math.PI;
     
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        var start = 1.5*Math.PI;
+        var finish = start;
+
+        var selectedStart  = 1.5*Math.PI;
+        var selectedFinish = selectedFinish; 
+        var selectedIndex  = 0;
+
         // Desenha todos as seções:
-        for (i=0;i<count;i++){
-            red   = Math.floor(Math.random() * 255);
-            green = Math.floor(Math.random() * 255);
-            blue  = Math.floor(Math.random() * 255);
-    
-            ctx.fillStyle = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
-    
+        for (i=0;i<size;i++){
+            finish = finish + minAngle*parseInt(this.values[i][0]);
+            ctx.fillStyle = this.values[i][1];
+
             ctx.shadowBlur = 0; 
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.radius, start, finish);
             ctx.lineTo(this.x, this.y);
             ctx.closePath();
-    
+
             if (ctx.isPointInPath(mouseX, mouseY)){
                 selectedStart  = start;
-                selectedFinish = finish;   
+                selectedFinish = finish;
+                selectedIndex  = i;   
             }
-            
             ctx.fill();
-    
-            start  = finish;
-            finish = finish + angle;        
+
+            start  = finish;       
         } 
         // Desenha a seção em hover: 
-        if (selectedStart != selectedFinish)
-        {
-            red   = Math.floor(Math.random() * 255);
-            green = Math.floor(Math.random() * 255);
-            blue  = Math.floor(Math.random() * 255);
-    
-            ctx.fillStyle = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
+            
+        if (selectedStart != selectedFinish){
+            ctx.fillStyle = brighten(this.values[selectedIndex][1], 15);
         
             ctx.shadowColor = 'black';
             ctx.shadowBlur = 10;   
-    
+
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.radius, selectedStart, selectedFinish);
             ctx.lineTo(this.x, this.y);

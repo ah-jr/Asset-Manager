@@ -95,11 +95,15 @@
 <script src="modules.js"></script>
 <script src="networth.js"></script>
 <script src="evolution.js"></script>
-<script src="canvas.js"></script>
+<script src="canvasUtils.js"></script>
+<script src="PieChartU.js"></script>
+
 
 <script>
 window.onload = function(){
     document.getElementById("addExpense").style.display = "none"
+    ExpensePieChart = new PieChart('TEST', 150, 150, 100, pieChartValues);
+
     createBlock()
     updateDashboard()
     chartWindow()
@@ -107,25 +111,7 @@ window.onload = function(){
     evolutionWindow()
     networthWindow()
 
-    var red   = Math.floor(Math.random() * 255);
-    var green = Math.floor(Math.random() * 255);
-    var blue  = Math.floor(Math.random() * 255);
-    var color1 = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
-    red   = Math.floor(Math.random() * 255);
-    green = Math.floor(Math.random() * 255);
-    blue  = Math.floor(Math.random() * 255);
-    var color2 = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
-    red   = Math.floor(Math.random() * 255);
-    green = Math.floor(Math.random() * 255);
-    blue  = Math.floor(Math.random() * 255);
-    var color3 = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
-
-    var values = [[4,color1],[10,color2],[5,color3]];
-
-    //var canvas = document.getElementById('TEST');
-    var ExpensePieChart = new PieChart('TEST', 150, 150, 100, values);
-
-    ExpensePieChart.Paint(3, 0, 0);
+    ExpensePieChart.Paint();
 }
 var user = <%- JSON.stringify(a) %>; 
 var expenses = user.expenses
