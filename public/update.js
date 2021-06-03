@@ -13,7 +13,7 @@ function updateDashboard(){
             }
         }
         
-        renderChart()
+        //renderChart()
         updateNetworth()
         renderEvolutionChart(evolutionData, evolutionLabels);
 
