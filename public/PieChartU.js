@@ -22,7 +22,7 @@ class PieChart{
     }
 
     //==================================================================
-    //            Método: UpdateValue
+    //            Método: UpdateValues
     //         Descrição: Recria o vetor de valores
     //           Criação: 02/06/2021 Airton Junior
     //==================================================================
@@ -56,7 +56,7 @@ class PieChart{
         var finish = start;
 
         var selectedStart  = 1.5*Math.PI;
-        var selectedFinish = selectedFinish; 
+        var selectedFinish = selectedStart; 
         var selectedIndex  = 0;
 
         // Desenha todos as seções:
@@ -77,7 +77,7 @@ class PieChart{
             }
             ctx.fill();
 
-            start  = finish;       
+            start = finish;       
         } 
         // Desenha a seção em hover: 
             

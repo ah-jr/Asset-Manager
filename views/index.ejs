@@ -69,10 +69,12 @@
     <div class="module">
         <div id="evolution">
             <button class = "maximize" id = "EVMAX">MAX</button>
+            <button id = "switchChartRendering">Linha/Curva</button>
             <div class="title">
                 <h2><b>Your Evolution:</b></h2>
             </div>
-            <canvas id="evolutionChart"></canvas>
+            <canvas id="TEST2" width="350" height="300"></canvas>
+            <!-- <canvas id="evolutionChart"></canvas> -->
         </div>
     </div>    
 </div>
@@ -96,13 +98,17 @@
 <script src="networth.js"></script>
 <script src="evolution.js"></script>
 <script src="canvasUtils.js"></script>
+
 <script src="PieChartU.js"></script>
+<script src="LineChartU.js"></script>
 
 
 <script>
 window.onload = function(){
     document.getElementById("addExpense").style.display = "none"
     ExpensePieChart = new PieChart('TEST', 150, 150, 100, pieChartValues);
+    evolutionLineChart = new LineChart('TEST2', 300, 350, lineChartValues);
+    evolutionChartPaintMode = INTERPOLATED;
 
     createBlock()
     updateDashboard()
@@ -112,10 +118,25 @@ window.onload = function(){
     networthWindow()
 
     ExpensePieChart.Paint();
+    evolutionLineChart.Paint();
 }
 var user = <%- JSON.stringify(a) %>; 
 var expenses = user.expenses
 var index = 0;
+
+
+$('#switchChartRendering').click(function(event){
+    switch(evolutionChartPaintMode){
+        case STRAIGHT: 
+            evolutionChartPaintMode = INTERPOLATED;
+            break;
+        case INTERPOLATED: 
+            evolutionChartPaintMode = STRAIGHT;
+            break
+    }
+    evolutionLineChart.Paint(evolutionChartPaintMode);
+});
+
 
 $(document).ready(function(){
     $('#addE').submit(function(event){

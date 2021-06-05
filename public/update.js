@@ -6,6 +6,7 @@ function updateDashboard(){
         networth.style.display = "block"
         evolution.style.display = "block"
         pieChartValues = [];
+        lineChartValues = [];
         for(i = 0; i<user.expenses.length; i++){
             if(user.expenses[i] != null){
                 chartData.push(expenses[i].amount)
@@ -16,19 +17,22 @@ function updateDashboard(){
                 var green = Math.floor(Math.random() * 255);
                 var blue  = Math.floor(Math.random() * 255);
                 //var color = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
-                var color = '#' + red.toString(16) + green.toString(16) + blue.toString(16);
+                var color = '#' + red.toString(16).padStart(2, "0") + green.toString(16).padStart(2, "0") + blue.toString(16).padStart(2, "0");
             
-                pieChartValues.push([expenses[i].amount, color])
+                pieChartValues.push([expenses[i].amount, color]);
+                lineChartValues.push([expenses[i].amount, expenses[i].date]);
+
             }
         }
         ExpensePieChart.UpdateValues(pieChartValues);
         ExpensePieChart.Paint();
 
-        console.log(user.expenses);
+        evolutionLineChart.UpdateValues(lineChartValues);
+        evolutionLineChart.Paint(evolutionChartPaintMode);
         
         //renderChart()
         updateNetworth()
-        renderEvolutionChart(evolutionData, evolutionLabels);
+        //renderEvolutionChart(evolutionData, evolutionLabels);
 
     }
     else{

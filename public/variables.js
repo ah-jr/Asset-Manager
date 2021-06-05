@@ -25,11 +25,15 @@ var dragging = false
 var chartData = []
 var chartColor = []
 var chartLabels = []
+
 var pieChartValues = [];
+var lineChartValues = [];
 
 var ExpensePieChart = {};
+var evolutionLineChart = {};
 
 var evolutionData = []
 var evolutionLabels =  []
 
-var totalExpenses = 0
+var totalExpenses = 0;
+var evolutionChartPaintMode;
