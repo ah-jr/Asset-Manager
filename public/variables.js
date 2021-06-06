@@ -1,39 +1,37 @@
-var addButton = document.getElementById("addButton")
-var chart = document.getElementsByClassName("chart")
-var eList = document.getElementsByClassName("expenses-list")
-var networth = document.getElementById("networth")
-var dashboard = document.getElementById("dashboard")
-var page = document.getElementById("page")
-var ctx = document.getElementById('myChart');
-var cell = document.getElementsByClassName('cell')
-var evolution = document.getElementById('evolution')
-
-
-class UIMode{
-    constructor(cF, eF, nF, evF){
-        this.chartFullscreen = cF;
-        this.expenseFullscreen = eF;
-        this.networthFullscreen = nF;
-        this.evolutionFullscreen = evF;
+function initVariables(){
+    class UIMode{
+        constructor(cF, eF, nF, evF){
+            this.chartFullscreen = cF;
+            this.expenseFullscreen = eF;
+            this.networthFullscreen = nF;
+            this.evolutionFullscreen = evF;
+        }
     }
-}
+    UI = new UIMode(false, false, false, false)
 
-var UI = new UIMode(false, false, false, false)
+    // Elementos DOM globais
+    dashboard = document.getElementById("dashboard");
+    page      = document.getElementById("page");
+    cells     = document.getElementsByClassName('cell');
+  
+    // Variáves de interação com o mouse
+    dragType = null;
+    dragValue = {};
+    dragging = false;
+    oldPosition = [];
+    xOffset = 0;
+    yOffset = 0;
+    draggin = false;
 
-var dragging = false
+    // Variáveis de interesse global: (talvez façam parte de um Manager no futuro)
+    totalExpenses = 0;
 
-var chartData = []
-var chartColor = []
-var chartLabels = []
+    // Módulos
+    ExpenseRatios = {};
+    Evolution     = {};
+    ExpenseList   = {};
+    Networth      = {};
 
-var pieChartValues = [];
-var lineChartValues = [];
-
-var ExpensePieChart = {};
-var evolutionLineChart = {};
-
-var evolutionData = []
-var evolutionLabels =  []
-
-var totalExpenses = 0;
-var evolutionChartPaintMode;
+    // Menus
+    ExpenseMenu = {};
+};

@@ -20,7 +20,17 @@ initializePassport(passport,
 )
 
 
-const users = []
+const users = [];
+
+users.push({
+    id: '1622944747245',
+    name: 'a',
+    email: 'a@a',
+    password: '$2b$10$0zsxch5SIiPUt.C2wfz7KuuMHRL3cEOBM2Roeqp6KoROS7BB6pLvu',
+    expenses: [],
+    cont: 0,
+    UI: [["18%", "25%"], ["50%", "25%"],["82%", "25%"], ["18%", "75%"]]
+})
 
 app.set('view-engine', 'ejs')
 app.use(methodOverride ('_method'))
@@ -42,34 +52,42 @@ app.get('/', (req,res) => {
 })
 
 app.get('/index', (req,res) => {
-    if(req.user == undefined) res.render('notlogged.ejs')
-    if(req.body.value != undefined){
-        res.redirect('register.ejs')
+    try{
+        if(req.user == undefined) res.render('notlogged.ejs')
+        else if(req.body.value != undefined){
+            res.redirect('register.ejs')
+        }
+        else res.render('index.ejs', {user: req.user})
+    } catch{
+        console.log('EXCEPTION! => GET /index');
     }
-    else res.render('index.ejs', {user: req.user})
 })
 
 app.post('/index', async (req, res) => {
-    if (req.body.title != undefined){
-        req.user.expenses.push({
-            title: req.body.title,
-            amount: req.body.amount,
-            date: req.body.date
-        })
-        console.log(req.body.date)
-        req.user.cont += 1
-    }
-    else if (req.body.remove != undefined){
-        req.user.expenses.splice(req.body.remove, 1)
-        req.user.cont -= 1
-    }
-    else if (req.body.windowLeft != undefined){
-        req.user.UI[req.body.windowType][0] = req.body.windowLeft
-        req.user.UI[req.body.windowType][1] = req.body.windowTop
-    }
+    try{
+        if (req.body.title != undefined){
+            req.user.expenses.push({
+                title: req.body.title,
+                amount: req.body.amount,
+                date: req.body.date
+            })
+            console.log(req.body.date)
+            req.user.cont += 1
+        }
+        else if (req.body.remove != undefined){
+            req.user.expenses.splice(req.body.remove, 1)
+            req.user.cont -= 1
+        }
+        else if (req.body.windowLeft != undefined){
+            req.user.UI[req.body.windowType][0] = req.body.windowLeft
+            req.user.UI[req.body.windowType][1] = req.body.windowTop
+        }
 
-    if (req.body.ajax == undefined) res.render('index.ejs', {user: req.user})
-    else res.send(req.user)
+        if (req.body.ajax == undefined) res.render('index.ejs', {user: req.user})
+        else res.send(req.user)
+    } catch{
+        console.log('EXCEPTION! => POST /index');
+    }
 })
 
 
@@ -88,6 +106,7 @@ app.get('/register', (req, res) => {
 app.post('/register', async (req, res) => {
     try{
         const hashedPassword = await bcrypt.hash(req.body.password, 10)
+        console.log(hashedPassword);
         users.push({
             id: Date.now().toString(),
             name: req.body.name,

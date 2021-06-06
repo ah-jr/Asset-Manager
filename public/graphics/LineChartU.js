@@ -5,22 +5,20 @@
 //           Criação: 03/06/2021 Airton Junior
 //======================================================================
 
-const INTERPOLATED = 1, 
-      STRAIGHT     = 2;
-
 class LineChart{
-    constructor(element, height, width, values, border = 10){
-        this.canvas = document.getElementById(element);
-        this.height = height;
-        this.width  = width;
-        this.values = values;
+    constructor(element, height, width, values, border = 20){
+        this.canvas    = document.getElementById(element);
+        this.height    = height;
+        this.width     = width;
+        this.values    = values;
+        this.paintMode = STRAIGHT;
 
-        this.drawRect = {top : border, 
+        this.drawRect = {top    : border, 
                          bottom : this.height - border, 
-                         left : border,
-                         right : this.width - border,
+                         left   : border,
+                         right  : this.width - border,
                          height : this.height - 2*border,
-                         width : this.width - 2*border }
+                         width  : this.width - 2*border }
     }
 
     //==================================================================
@@ -39,7 +37,7 @@ class LineChart{
     //           Criação: 03/06/2021 Airton Junior
     //==================================================================
 
-    Paint(paintMode = STRAIGHT){
+    Paint(){
         var ctx = this.canvas.getContext('2d');
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -64,7 +62,7 @@ class LineChart{
             ctx.strokeStyle = '#00CFFF';
             ctx.lineWidth = 3;
 
-            switch(paintMode){
+            switch(this.paintMode){
                 case STRAIGHT: {
                     var point = [this.drawRect.left, values[0]];
                     ctx.beginPath();

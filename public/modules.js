@@ -13,3 +13,21 @@ function showModules(){
         modules[i].style.display = "block";
     }
 }
+
+function createModuleDOM (name, title, header, content){
+    return  `
+    <div id="` + name + `">
+        <!-- Header -->
+        <div id="`+ name +`-header">
+            ` + header + `
+        </div>   
+        <!-- Title -->
+        <div class="module-title">
+            <h2><b>` + title + `</b></h2>
+        </div>
+        <!-- Content -->
+        <div id="`+ name +`-content">
+            ` + content + `
+        </div>
+    </div>`;
+}

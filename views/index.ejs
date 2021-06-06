@@ -4,171 +4,77 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
 <body>
-<div id= "page">
+    <div id= "page">
+        <img id= "logo" src = "images/logo.png">
 
-<img id= "logo" src = "images/logo.png">
+        <form action = "/logout?_method=DELETE" method = "POST">
+            <button type = "submit" style = "float: right;"> Log Out</button>
+        </form>
 
-<form action = "/logout?_method=DELETE" method = "POST">
-    <button type = "submit" style = "float: right;"> Log Out</button>
-</form>
+        <div id = "addExpenseMenu"></div>
 
-<button id= "addButton"></button>
-
-<div id="addExpense" style="text-align:center;" onsubmit= "return false">
-    <form id= "addE">
-        <input type = "text" class = "textInput" id = "title" name = "title" placeholder= "Title" required>
-        <input type = "number" step="0.01" class = "textInput" id = "amount" name = "amount" placeholder= "Amount" required>
-        <input type = "date" class = "textInput" id = "date" name = "date" placeholder= "date" required>
-        <button type='submit' class = "button" id = "submit">Add Expense</button>
-    </form>
-</div>
-
-<div id= "dashboard">
-    <div class="cells">
-        <div class="cell" id="_0"></div>
-        <div class="cell" id="_1"></div>
-        <div class="cell" id="_2"></div>
-        <div class="cell" id="_3"></div>
-        <div class="cell" id="_4"></div>
-        <div class="cell" id="_5"></div>
-    </div>
-    
-
-    <div class="module">
-        <div class="expenses-list">
-            <div id="ELheader">
-                <button class = "maximize" id = "ELMAX">MAX</button>
-            </div>
-            <div id="ELcontent"></div>
-        </div>
-    </div>
-
-    <div class="module">
-        <div class="chart">
-            <button class = "maximize" id = "CMAX">MAX</button>
-            <div class="title">
-                <h2><b>Expense Ratio:</b></h2>
-            </div>
-            <canvas id="TEST" width="400" height="400"></canvas>
-            <div id="chartContainer">
-                <!-- <canvas id="myChart"></canvas> -->
+        <!-- DASHBOARD STRUCTURE -->
+        <div id= "dashboard">
+            <div class="cells">
+                <div class="cell" id="_0"></div>
+                <div class="cell" id="_1"></div>
+                <div class="cell" id="_2"></div>
+                <div class="cell" id="_3"></div>
+                <div class="cell" id="_4"></div>
+                <div class="cell" id="_5"></div>
             </div>
         </div>
-    </div>
 
-    <div class="module">
-        <div id="networth">
-            <button class = "maximize" id = "NMAX">MAX</button>
-            <div class="title">
-                <h2><b>Your Balance:</b></h2>
-            </div>
-            <div id="balance-data"></div>
-        </div>
     </div>
-
-    <div class="module">
-        <div id="evolution">
-            <button class = "maximize" id = "EVMAX">MAX</button>
-            <button id = "switchChartRendering">Linha/Curva</button>
-            <div class="title">
-                <h2><b>Your Evolution:</b></h2>
-            </div>
-            <canvas id="TEST2" width="350" height="300"></canvas>
-            <!-- <canvas id="evolutionChart"></canvas> -->
-        </div>
-    </div>    
-</div>
-</div>
 </body>
-
-<% var a = user; %>
 </head>
 
-
 <script src="libraries/jquery-3.5.1.min.js"></script>
-<script src="libraries/Chart.js"></script>
 
+<script src="constants.js"></script>
 <script src="variables.js"></script>
-<script src="scripts.js"></script>
+
 <script src="mouse.js"></script>
 <script src="update.js"></script>
-<script src="expense-list.js"></script>
-<script src="chart-window.js"></script>
 <script src="modules.js"></script>
-<script src="networth.js"></script>
-<script src="evolution.js"></script>
-<script src="canvasUtils.js"></script>
+<script src="generalUtils.js"></script>
 
-<script src="PieChartU.js"></script>
-<script src="LineChartU.js"></script>
+<script src="graphics/canvasUtils.js"></script>
+<script src="graphics/PieChartU.js"></script>
+<script src="graphics/LineChartU.js"></script>
 
+<script src="menus/ExpenseCreationU.js"></script>
+
+<script src="modules/ExpenseRatioU.js"></script>
+<script src="modules/ExpenseListU.js"></script>
+<script src="modules/NetworthU.js"></script>
+<script src="modules/EvolutionU.js"></script>
 
 <script>
+// Valores do usuário, recebidos do servidor: 
+var user = <%- JSON.stringify(user) %>; 
+
 window.onload = function(){
-    document.getElementById("addExpense").style.display = "none"
-    ExpensePieChart = new PieChart('TEST', 150, 150, 100, pieChartValues);
-    evolutionLineChart = new LineChart('TEST2', 300, 350, lineChartValues);
-    evolutionChartPaintMode = INTERPOLATED;
+    initVariables();
 
-    createBlock()
-    updateDashboard()
-    chartWindow()
-    expenseWindow()
-    evolutionWindow()
-    networthWindow()
+    // Criação dos módulos
+    ExpenseRatios = new ExpenseRatioModule('ExpenseRatios', 'Expense Ratios');
 
-    ExpensePieChart.Paint();
-    evolutionLineChart.Paint();
-}
-var user = <%- JSON.stringify(a) %>; 
-var expenses = user.expenses
-var index = 0;
+    Evolution = new EvolutionModule('Evolution', 'Your Evolution');
+    Evolution.lineChart.paintMode = INTERPOLATED;
 
+    ExpenseList = new ExpenseListModule('ExpenseList', 'Expense List');
+    ExpenseList.updateList();
 
-$('#switchChartRendering').click(function(event){
-    switch(evolutionChartPaintMode){
-        case STRAIGHT: 
-            evolutionChartPaintMode = INTERPOLATED;
-            break;
-        case INTERPOLATED: 
-            evolutionChartPaintMode = STRAIGHT;
-            break
-    }
-    evolutionLineChart.Paint(evolutionChartPaintMode);
-});
+    Networth = new NetworthModule('Networth', 'Your Balance');
+    Networth.updateNetworth();
 
+    // Criação dos menus
+    ExpenseMenu = new ExpenseCreationMenu();
 
-$(document).ready(function(){
-    $('#addE').submit(function(event){
-        console.log("opa")
-        index += 1;
-        var title = $("#title").val();
-        var amount = $("#amount").val();
-        var date = $("#date").val();
-        $.ajax({
-            method: 'POST',
-            url: "/index",
-            data: {title: title,
-                amount: amount,
-                value: 1,
-                date: date,
-                ajax: 1
-            },
-            success: function(status){
-                user = status
-                expenses = user.expenses
-                $("#test").val('')
-                createBlock()
-                chartData = []
-                chartLabels = []
-                
-                updateDashboard()
-            }
-        })
-    })
-})
-
-    
+    // Iniciar Dashboard
+    updateDashboard();
+    initMouse();
+}   
 </script>
 </html>
-

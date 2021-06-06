@@ -1,12 +1,12 @@
 //==================================================================
 //              Nome: brighten
-//         Descrição: Realiza a pintura com curvas (interpolação)
+//         Descrição: Altera brilho de cor em HEX
 //==================================================================
 
 function brighten(color, amount){
-    var red   = Math.min(parseInt(color.substring(1, 3), 16) + amount, 255).toString(16);   
-    var green = Math.min(parseInt(color.substring(3, 5), 16) + amount, 255).toString(16);   
-    var blue  = Math.min(parseInt(color.substring(5, 7), 16) + amount, 255).toString(16);   
+    var red   = Math.min(parseInt(color.substring(1, 3), 16) + amount, 255).toString(16).padStart(2, "0");   
+    var green = Math.min(parseInt(color.substring(3, 5), 16) + amount, 255).toString(16).padStart(2, "0");   
+    var blue  = Math.min(parseInt(color.substring(5, 7), 16) + amount, 255).toString(16).padStart(2, "0");   
     return '#' + red + green + blue;
 }
 
