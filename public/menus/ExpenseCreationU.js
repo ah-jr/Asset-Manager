@@ -14,10 +14,14 @@ class ExpenseCreationMenu{
 
         <div id="addExpensePopUp" style="text-align:center;" onsubmit= "return false">
             <form id= "addE">
+                <select name="insert-type" id="insert-type">
+                    <option value="expense">Expense</option>
+                    <option value="income">Income</option>
+                </select>
                 <input type = "text" class = "textInput" id = "title" name = "title" placeholder= "Title" required>
                 <input type = "number" step="0.01" class = "textInput" id = "amount" name = "amount" placeholder= "Amount" required>
                 <input type = "date" class = "textInput" id = "date" name = "date" placeholder= "date" required>
-                <button type='submit' class = "button" id = "submit">Add Expense</button>
+                <button type='submit' class = "button" id = "submit">Add</button>
             </form>
         </div>
         `;
@@ -30,14 +34,24 @@ class ExpenseCreationMenu{
         $(document).ready(function(){
             $('#addE').submit(function(event){
                 index += 1;
+                var type;
                 var title  = $("#title").val();
                 var amount = $("#amount").val();
                 var date   = $("#date").val();
 
+                if ($("#insert-type option:selected").index() == 0)
+                    type = REQ_ADD_EXPENSE;
+                else if ($("#insert-type option:selected").index() == 1) 
+                    type = REQ_ADD_INCOME;
+                else   
+                    type = undefined;
+                    
                 $.ajax({
                     method: 'POST',
                     url: "/index",
-                    data: {title: title,
+                    data: {
+                        type:     type,
+                        title:    title,
                         amount:   amount,
                         value:    1,
                         date:     date,
@@ -47,9 +61,9 @@ class ExpenseCreationMenu{
                         user        = status;                        
                         updateDashboard();
                     }
-                })
-            })
-        })
+                });
+            });
+        });
     }
     setMouseInteraction(){
         this.addExpenseButton.onmouseover = function(){

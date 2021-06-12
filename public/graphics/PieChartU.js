@@ -8,17 +8,22 @@
 class PieChart{
     constructor(element, x, y, radius, values){
         this.canvas = document.getElementById(element);
-        this.x = x;
-        this.y = y;
-        this.radius = radius;
         this.values = values;
         this.canvas.addEventListener('click', ClickEvent.bind(this), false);
+
+        this.resize(x, y, radius);
 
         function ClickEvent(e){
             var canvasCursorX = e.pageX - $('#' + element).offset().left;
             var canvasCursorY = e.pageY - $('#' + element).offset().top;
             this.Paint(canvasCursorX, canvasCursorY);
         }
+    }
+
+    resize(x, y, radius){
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
     }
 
     //==================================================================

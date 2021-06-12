@@ -1,9 +1,9 @@
 function initVariables(){
     class UIMode{
         constructor(cF, eF, nF, evF){
-            this.chartFullscreen = cF;
-            this.expenseFullscreen = eF;
-            this.networthFullscreen = nF;
+            this.chartFullscreen     = cF;
+            this.expenseFullscreen   = eF;
+            this.networthFullscreen  = nF;
             this.evolutionFullscreen = evF;
         }
     }
@@ -15,21 +15,24 @@ function initVariables(){
     cells     = document.getElementsByClassName('cell');
   
     // Variáves de interação com o mouse
-    dragType = null;
-    dragValue = {};
-    dragging = false;
+    dragType    = null;
+    dragValue   = {};
+    dragging    = false;
     oldPosition = [];
-    xOffset = 0;
-    yOffset = 0;
-    draggin = false;
+    xOffset     = 0;
+    yOffset     = 0;
+    draggin     = false;
 
     // Variáveis de interesse global: (talvez façam parte de um Manager no futuro)
     totalExpenses = 0;
+    totalIncome   = 0;
 
     // Módulos
     ExpenseRatios = {};
+    IncomeRatios  = {};
     Evolution     = {};
     ExpenseList   = {};
+    IncomeList    = {};
     Networth      = {};
 
     // Menus

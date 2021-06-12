@@ -49,6 +49,8 @@
 <script src="modules/ExpenseListU.js"></script>
 <script src="modules/NetworthU.js"></script>
 <script src="modules/EvolutionU.js"></script>
+<script src="modules/IncomeRatioU.js"></script>
+<script src="modules/IncomeListU.js"></script>
 
 <script>
 // Valores do usuário, recebidos do servidor: 
@@ -59,12 +61,16 @@ window.onload = function(){
 
     // Criação dos módulos
     ExpenseRatios = new ExpenseRatioModule('ExpenseRatios', 'Expense Ratios');
+    IncomeRatios = new IncomeRatioModule('IncomeRatios', 'Income Ratios');
 
     Evolution = new EvolutionModule('Evolution', 'Your Evolution');
     Evolution.lineChart.paintMode = INTERPOLATED;
 
     ExpenseList = new ExpenseListModule('ExpenseList', 'Expense List');
     ExpenseList.updateList();
+
+    IncomeList = new IncomeListModule('IncomeList', 'Income List');
+    IncomeList.updateList();
 
     Networth = new NetworthModule('Networth', 'Your Balance');
     Networth.updateNetworth();
@@ -76,5 +82,13 @@ window.onload = function(){
     updateDashboard();
     initMouse();
 }   
+
+window.onresize = function(){
+    Evolution.resizeCanvas();
+    Evolution.lineChart.Paint();
+
+    ExpenseRatios.resizeCanvas();
+    ExpenseRatios.pieChart.Paint();
+};
 </script>
 </html>

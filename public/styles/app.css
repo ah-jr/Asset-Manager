@@ -72,6 +72,23 @@
   color: rgb(230, 41, 41);
 }
 
+#balance-data h1 {
+  font-size: 2vh; 
+} 
+
+#balance-data h2 {
+  font-size: 2vh; 
+} 
+
+#balance-data{
+  overflow-y : auto;
+}
+
+#balance-data :after {
+  position: absolute;
+  cursor: w-resize;
+}
+
 #addExpensePopUp {
   position: absolute;
   top: 8%;

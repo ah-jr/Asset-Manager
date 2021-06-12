@@ -1,8 +1,8 @@
-class ExpenseListModule{
+class IncomeListModule{
     constructor(name, title){
         this.name = name;
         this.title = title;
-        this.canvasID = 'expense-list-canvas';
+        this.canvasID = 'income-list-canvas';
         this.DOM = this.createDOM();
         this.setMouseDown();
         this.setStyle();
@@ -69,21 +69,21 @@ class ExpenseListModule{
     }
     updateList(){
         var codeBlock = [];
-        for (var i=0; i<user.expenseCount; i++){
+        for (var i=0; i<user.incomeCount; i++){
             codeBlock[i] = 
-            '<div class = "expense" style="display: table-row;">' + 
+            '<div class = "income" style="display: table-row;">' + 
                 '<div style=" display: table-cell;">' +
                     '<form action = "/index" method = "POST">' +
                         '<button type = "submit" name = "remove" class= "removeButton" value = "' + i + '" ></button>' + 
-                        '<input type = "hidden" name = "type" value = "' + REQ_REMOVE_EXPENSE + '" />' +
+                        '<input type = "hidden" name = "type" value = "' + REQ_REMOVE_INCOME + '" />' +
                     '</form>' + 
                 '</div>' +
                 '<div style="display: table-cell;">' +
-                    '<h5><b>' + user.expenses[i].title + '&nbsp</b></h5>' +
-                    '<div class="negative-value"><h4> R$' + user.expenses[i].amount + '</h4></div>' +
+                    '<h5><b>' + user.incomes[i].title + '&nbsp</b></h5>' +
+                    '<div class="positive-value"><h4> R$' + user.incomes[i].amount + '</h4></div>' +
                 '</div>' +
                 '<div style="display: table-cell;">' +
-                    '<p>&nbsp(' + BRdate(user.expenses[i].date) + ')</p>' +
+                    '<p>&nbsp(' + BRdate(user.incomes[i].date) + ')</p>' +
                 '</div>' +
             '</div>';
         }

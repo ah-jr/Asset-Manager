@@ -1,8 +1,8 @@
-class ExpenseRatioModule{
+class IncomeRatioModule{
     constructor(name, title){
         this.name = name;
         this.title = title;
-        this.canvasID = 'expense-ratio-canvas';
+        this.canvasID = 'income-ratio-canvas';
         this.DOM = this.createDOM();
         this.setMouseDown();
         this.setStyle();

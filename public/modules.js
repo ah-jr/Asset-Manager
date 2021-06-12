@@ -26,7 +26,7 @@ function createModuleDOM (name, title, header, content){
             <h2><b>` + title + `</b></h2>
         </div>
         <!-- Content -->
-        <div id="`+ name +`-content">
+        <div id="`+ name +`-content" style = "height: calc(100% - 100px);">
             ` + content + `
         </div>
     </div>`;

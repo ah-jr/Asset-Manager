@@ -6,19 +6,23 @@
 //======================================================================
 
 class LineChart{
-    constructor(element, height, width, values, border = 20){
+    constructor(element, height, width, values){
         this.canvas    = document.getElementById(element);
-        this.height    = height;
-        this.width     = width;
         this.values    = values;
         this.paintMode = STRAIGHT;
+        this.resize(height, width);
+    }
+
+    resize(height, width, border = 20){
+        this.height    = height;
+        this.width     = width;
 
         this.drawRect = {top    : border, 
-                         bottom : this.height - border, 
-                         left   : border,
-                         right  : this.width - border,
-                         height : this.height - 2*border,
-                         width  : this.width - 2*border }
+            bottom : this.height - border, 
+            left   : border,
+            right  : this.width - border,
+            height : this.height - 2*border,
+            width  : this.width - 2*border }
     }
 
     //==================================================================

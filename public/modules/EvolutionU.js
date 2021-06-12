@@ -3,15 +3,19 @@ class EvolutionModule{
         this.name = name;
         this.title = title;
         this.canvasID = 'evolution-canvas';
-        this.DOM = this.createDOM();
+        this.DOM = this.createDOM();  
         this.setMouseDown();
         this.setStyle();
         this.setMaximize();
         this.setRenderSwitch();
-        this.lineChart = new LineChart(this.canvasID, 300, 350, []);
+
+        this.canvasElement = document.getElementById(this.canvasID);
+
+        this.lineChart = new LineChart(this.canvasID, $(this.canvasElement).height(), $(this.canvasElement).width(), []);
+        this.resizeCanvas();
     }
     createDOM(){
-        var content = `<canvas id="` + this.canvasID + `" width="400" height="400"></canvas>`;
+        var content = `<canvas id="` + this.canvasID + `"></canvas>`;
         var header  = `<button class = "maximize" id = "EVMAX">MAX</button>
                        <button id = "switchChartRendering">Linha/Curva</button>`;
         var DOM_modularStructure = createModuleDOM(this.name, this.title, header, content);
@@ -34,15 +38,15 @@ class EvolutionModule{
     }
     setStyle(){
         this.DOM.style.zIndex = '2';
-        this.DOM.style.backgroundColor = '#eaeaea';
+        this.DOM.style.backgroundColor = '#f2f2f2';
         this.DOM.style.width = '30%';
         this.DOM.style.height = '40%';
         this.DOM.style.position = 'absolute';
         this.DOM.style.border = '1px solid';
-        this.DOM.style.borderColor = '#81818138';
-        this.DOM.style.borderRadius = '8px';
-        this.DOM.style.boxShadow = '0 0 10px gray';
-        this.DOM.style.transform = 'translate(-50%, -50%)';  
+        this.DOM.style.borderColor = '#f2f2f2';
+        this.DOM.style.borderRadius = '3px';
+        this.DOM.style.boxShadow       = '0 0 4px #b0b0b0';
+        this.DOM.style.transform = 'translate(-50%, -50%)'; 
     }
     setMaximize(){
         $('#EVMAX').click(function(event){
@@ -81,5 +85,10 @@ class EvolutionModule{
             }
             this.lineChart.Paint();
         }.bind(this));
+    }
+    resizeCanvas(){
+        this.canvasElement.width = $("#" + this.name + "-content").width();
+        this.canvasElement.height = $("#" + this.name + "-content").height();
+        this.lineChart.resize(this.canvasElement.height, this.canvasElement.width);
     }
 }

@@ -9,7 +9,7 @@ class NetworthModule{
         this.setMaximize();
     }
     createDOM(){
-        var content = `<div id="balance-data"></div>`;
+        var content = `<div id="balance-data" style = "height : 100%;"></div>`;
         var header  = `<button class = "maximize" id = "NMAX">MAX</button>`;
         var DOM_modularStructure = createModuleDOM(this.name, this.title, header, content);
 
@@ -31,14 +31,14 @@ class NetworthModule{
     }
     setStyle(){
         this.DOM.style.zIndex          = '2';
-        this.DOM.style.backgroundColor = '#eaeaea';
+        this.DOM.style.backgroundColor = '#f2f2f2';
         this.DOM.style.width           = '30%';
         this.DOM.style.height          = '40%';
         this.DOM.style.position        = 'absolute';
         this.DOM.style.border          = '1px solid';
-        this.DOM.style.borderColor     = '#81818138';
-        this.DOM.style.borderRadius    = '8px';
-        this.DOM.style.boxShadow       = '0 0 10px gray';
+        this.DOM.style.borderColor     = '#f2f2f2';
+        this.DOM.style.borderRadius    = '3px';
+        this.DOM.style.boxShadow       = '0 0 4px #b0b0b0';
         this.DOM.style.transform       = 'translate(-50%, -50%)';
     }
     setMaximize(){
@@ -68,22 +68,24 @@ class NetworthModule{
     }
     updateNetworth(){
         totalExpenses = 0;
+        totalIncome   = 0;
     
-        for (var i=0; i<user.expenses.length; i++){
+        for (var i=0; i<user.expenseCount; i++){
             totalExpenses += parseInt(user.expenses[i].amount)
+        }
+
+        for (var i=0; i<user.incomeCount; i++){
+            totalIncome += parseInt(user.incomes[i].amount)
         }
             
         var codeBlock = 
-        '<div>' + 
             '<h2> Balance: </h2>'+
-            '<div><h1> R$' + totalExpenses + '</h1></div>'+
+            '<div><h1><b> R$' + (totalIncome - totalExpenses) + '</b></h1></div>'+
             '<h2> Income: </h2>'+
-            '<div class = "positive-value"><h1> R$' + totalExpenses + '</h1></div>'+
+            '<div class = "positive-value"><h1><b> R$' + totalIncome + '</b></h1></div>'+
             '<h2> Expenses: </h2>'+
-            '<div class = "negative-value"><h1> R$' + totalExpenses + '</h1></div>'+
-            
-        '</div>'
-           
+            '<div class = "negative-value"><h1><b> R$' + totalExpenses + '</b></h1></div>';
+                       
         $('#balance-data').empty();
         $('#balance-data').append(codeBlock);
     }

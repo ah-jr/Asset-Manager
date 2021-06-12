@@ -48,6 +48,7 @@ function initMouse(){
                 method: 'POST',
                 url: "/index",
                 data: {
+                    type : REQ_UI_MOVE_WINDOW,
                     windowLeft: dragValue.style.left,
                     windowTop: dragValue.style.top,
                     windowType: dragType,
