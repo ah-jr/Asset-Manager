@@ -36,8 +36,8 @@
 .button {
   top: 10px;
   border-radius: 5px;
-  width: 20%;
-  height: 10%;
+  /* width: 20%;
+  height: 10%; */
 }
 
 #centerElement {

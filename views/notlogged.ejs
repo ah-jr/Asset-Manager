@@ -13,9 +13,33 @@
             <form action = "/login">
                 <button class = "button" type = "submit" >Login</button>
             </form>
+
+            <form id = "dev-login" onsubmit= "return false">
+                <button type = "submit" class = "button">Log as DEV</button>
+            </form>
         </div>
     </div>
 </div>
-
 </body>
+<script src="libraries/jquery-3.5.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#dev-login').submit(function(event){
+            $.ajax({
+                method: 'POST',
+                url: "/login",
+                data: {email: "a@a",
+                       password: "a"
+                },
+                success: function(data){
+                    console.log("Sucesso!");
+                    window.location.href = "/";
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    console.log("Erro!");  
+                }
+            });
+        });
+    });    
+</script>
 </html>
