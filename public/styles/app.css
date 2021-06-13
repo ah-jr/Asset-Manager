@@ -42,7 +42,7 @@
 
 #dashboard {
   background-color: white;
-  transition: 0.2s ease;
+  transition: 0.2s ease; 
   position: absolute;
   width: 90%;
   height: 75%;
@@ -51,7 +51,7 @@
   border: 1px solid;
   border-color: #81818138;
   border-radius: 8px;
-  box-shadow: 0 0 10px gray;
+  box-shadow: 0 0 10px gray; 
 }
 
 .expenses-list:after {

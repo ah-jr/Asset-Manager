@@ -11,18 +11,18 @@
             <button type = "submit" style = "float: right;"> Log Out</button>
         </form>
 
+        <!-- TEMP -->
+        <form id= "grid-size" style = "float: right;">
+            <input type = "number" id = "grid-x" name = "grid-x" placeholder= "3" style = "width: 15px;" required>
+            <input type = "number" id = "grid-y" name = "grid-y" placeholder= "2" style = "width: 15px;" required>
+        </form>
+        <!-- TEMP -->
+
         <div id = "addExpenseMenu"></div>
 
         <!-- DASHBOARD STRUCTURE -->
         <div id= "dashboard">
-            <div class="cells">
-                <div class="cell" id="_0"></div>
-                <div class="cell" id="_1"></div>
-                <div class="cell" id="_2"></div>
-                <div class="cell" id="_3"></div>
-                <div class="cell" id="_4"></div>
-                <div class="cell" id="_5"></div>
-            </div>
+            <div id="cells"></div>
         </div>
 
     </div>
@@ -34,6 +34,7 @@
 <script src="constants.js"></script>
 <script src="variables.js"></script>
 
+<script src="cells.js"></script>
 <script src="mouse.js"></script>
 <script src="update.js"></script>
 <script src="modules.js"></script>
@@ -58,6 +59,7 @@ var user = <%- JSON.stringify(user) %>;
 
 window.onload = function(){
     initVariables();
+    generateCells(cellNumX,cellNumY);
 
     // Criação dos módulos
     ExpenseRatios = new ExpenseRatioModule('ExpenseRatios', 'Expense Ratios');
@@ -84,11 +86,44 @@ window.onload = function(){
 }   
 
 window.onresize = function(){
-    Evolution.resizeCanvas();
-    Evolution.lineChart.Paint();
+    generateCells(cellNumX,cellNumY);
 
-    ExpenseRatios.resizeCanvas();
+    ExpenseRatios.resize();
+    ExpenseList.resize();
+    IncomeList.resize();
+    IncomeRatios.resize();
+    Networth.resize();
+    Evolution.resize();  
+
+    Evolution.lineChart.Paint(); 
     ExpenseRatios.pieChart.Paint();
 };
+
+$("#grid-x").change(function(){
+    cellNumX = $("#grid-x").val();
+    window.dispatchEvent(new Event('resize'));
+    $.ajax({
+        method: 'POST',
+        url: "/index",
+        data: {
+            type:     5,
+            cellNumX: cellNumX
+        }
+    })
+})
+
+$("#grid-y").change(function(){
+    cellNumY = $("#grid-y").val();
+    window.dispatchEvent(new Event('resize'));
+    $.ajax({
+        method: 'POST',
+        url: "/index",
+        data: {
+            type:     6,
+            cellNumY: cellNumY
+        }
+    })
+})
+
 </script>
 </html>

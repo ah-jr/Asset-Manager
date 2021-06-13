@@ -1,12 +1,13 @@
 function initMouse(){
     document.onmousemove = function(e){
         if(dragging){
-            dragValue.style.left = (e.pageX + xOffset) + "px";
-            dragValue.style.top = (e.pageY + yOffset) + "px";
+            dragValue.DOM.style.left = (e.pageX + xOffset) + "px";
+            dragValue.DOM.style.top = (e.pageY + yOffset) + "px";
             dashboard.style.backgroundColor = "rgb(197, 197, 197)"
             page.style.backgroundColor = "rgb(97, 97, 97)"
             for (i = 0; i<cells.length; i++){
-                if(Math.abs(cells[i].offsetLeft - dragValue.offsetLeft) < 150 && Math.abs(cells[i].offsetTop - dragValue.offsetTop) < 150)
+                if(Math.abs(cells[i].offsetLeft - dragValue.DOM.offsetLeft) < cellWidth/2 && 
+                   Math.abs(cells[i].offsetTop - dragValue.DOM.offsetTop) < cellHeight/2)
                 {
                     cells[i].style.backgroundColor = "#e0f3ff"
                 }
@@ -22,7 +23,7 @@ function initMouse(){
     document.onmouseup = function(e){
         if(dragging)
         {
-            dragValue.style.zIndex = "1"
+            dragValue.DOM.style.zIndex = "1"
             dashboard.style.backgroundColor = "white"
             page.style.backgroundColor = "rgb(221, 221, 221)"
             var wWidth = dashboard.offsetWidth
@@ -30,18 +31,20 @@ function initMouse(){
             var changed = false
 
             for (i = 0; i<cells.length; i++){
-                if(Math.abs(cells[i].offsetLeft - dragValue.offsetLeft) < 150 && Math.abs(cells[i].offsetTop - dragValue.offsetTop) < 150)
+                if(Math.abs(cells[i].offsetLeft - dragValue.DOM.offsetLeft) < cellWidth/2 && 
+                   Math.abs(cells[i].offsetTop - dragValue.DOM.offsetTop) < cellHeight/2)
                 {
                     cells[i].style.backgroundColor = "white"
-                    dragValue.style.left = 100 - (100 * (wWidth - cells[i].offsetLeft) / wWidth) + "%" 
-                    dragValue.style.top = 100 - (100 * (wHeight - cells[i].offsetTop) / wHeight) + "%" 
+                    dragValue.DOM.style.left = 100 - (100 * (wWidth - cells[i].offsetLeft) / wWidth) + "%" 
+                    dragValue.DOM.style.top = 100 - (100 * (wHeight - cells[i].offsetTop) / wHeight) + "%" 
+                    dragValue.cellID = cells[i].id;
                     changed = true
                 }
             }
 
             if(!changed){
-                dragValue.style.left = oldPosition[0]
-                dragValue.style.top = oldPosition[1]
+                dragValue.DOM.style.left = oldPosition[0]
+                dragValue.DOM.style.top = oldPosition[1]
             } 
 
             $.ajax({
@@ -49,8 +52,7 @@ function initMouse(){
                 url: "/index",
                 data: {
                     type : REQ_UI_MOVE_WINDOW,
-                    windowLeft: dragValue.style.left,
-                    windowTop: dragValue.style.top,
+                    windowCell: parseInt(dragValue.cellID.substring(0, 3)),
                     windowType: dragType,
                     ajax: 1
                 },
@@ -59,7 +61,6 @@ function initMouse(){
                     expenses = user.expenses
                 }
             })    
-            
             dragValue = null
             dragging = false
         }

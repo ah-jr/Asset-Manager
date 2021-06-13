@@ -32,12 +32,8 @@ users.push({
     incomes: [],
     expenseCount: 0,
     incomeCount: 0,
-    UI: [["18%", "25%"], 
-         ["50%", "25%"],
-         ["82%", "25%"], 
-         ["18%", "70%"], 
-         ["50%", "70%"],
-         ["82%", "70%"]]
+    UI: [0, 1, 2, 3, 4, 5],
+    cellNum: [3, 2]
 });
 
 app.set('view-engine', 'ejs');
@@ -99,8 +95,13 @@ app.post('/index', async (req, res) => {
                 req.user.incomeCount -= 1;
             }
             else if (req.body.type == reqTypes.REQ_UI_MOVE_WINDOW){
-                req.user.UI[req.body.windowType][0] = req.body.windowLeft;
-                req.user.UI[req.body.windowType][1] = req.body.windowTop;
+                req.user.UI[req.body.windowType] = req.body.windowCell;
+            }
+            else if (req.body.type == 5){
+                req.user.cellNum[0] = req.body.cellNumX;
+            }
+            else if (req.body.type == 6){
+                req.user.cellNum[1] = req.body.cellNumY;
             }
             console.log(req.body.type);
         }
@@ -138,12 +139,8 @@ app.post('/register', async (req, res) => {
             incomes: [],
             expenseCount: 0,
             incomeCount : 0,
-            UI: [["18%", "25%"], 
-                 ["50%", "25%"],
-                 ["82%", "25%"], 
-                 ["18%", "70%"], 
-                 ["50%", "70%"],
-                 ["82%", "70%"]]
+            UI: [0, 1, 2, 3, 4, 5],
+            cellNum: [3, 2]
         });
         res.redirect('/login');
     } catch{

@@ -3,10 +3,12 @@ class IncomeListModule{
         this.name = name;
         this.title = title;
         this.canvasID = 'income-list-canvas';
+        this.cellID = '003-cell';
         this.DOM = this.createDOM();
         this.setMouseDown();
         this.setStyle();
         this.setMaximize();
+        this.resize();
     }
     createDOM(){
         var content = ``;
@@ -18,13 +20,13 @@ class IncomeListModule{
     }
     setMouseDown(){
         this.DOM.onmousedown = function(e){
-            dragType = EXPENSE_LIST_TYPE;
+            dragType = INCOME_LIST_TYPE;
             if(!UI.chartFullscreen){
                 this.DOM.style.zIndex = "3";
-                dragValue   = this.DOM;
-                oldPosition = [dragValue.offsetLeft, dragValue.offsetTop];
-                xOffset     = dragValue.offsetLeft - e.pageX ;
-                yOffset     = dragValue.offsetTop - e.pageY ;
+                dragValue   = this;
+                oldPosition = [dragValue.DOM.offsetLeft, dragValue.DOM.offsetTop];
+                xOffset     = dragValue.DOM.offsetLeft - e.pageX ;
+                yOffset     = dragValue.DOM.offsetTop - e.pageY ;
                 dragging    = true;
             }
         }.bind(this);
@@ -33,8 +35,6 @@ class IncomeListModule{
         this.DOM.style.overflowY       = 'auto';
         this.DOM.style.zIndex          = '2';
         this.DOM.style.backgroundColor = '#f2f2f2';
-        this.DOM.style.width           = '30%';
-        this.DOM.style.height          = '40%';
         this.DOM.style.position        = 'absolute';
         this.DOM.style.border          = '1px solid';
         this.DOM.style.borderColor     = '#f2f2f2';
@@ -90,5 +90,11 @@ class IncomeListModule{
         var newBlock = codeBlock.join('');
         $('#' + this.name + '-content').empty();
         $('#' + this.name + '-content').append(newBlock);
+    }
+    resize(){
+        this.DOM.style.height = $("#"+this.cellID).height();
+        this.DOM.style.width  = $("#"+this.cellID).width();
+        this.DOM.style.left   = $("#"+this.cellID).position().left + $("#"+this.cellID).width()  * 0.5;
+        this.DOM.style.top    = $("#"+this.cellID).position().top  + $("#"+this.cellID).height() * 0.5
     }
 }

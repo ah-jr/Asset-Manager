@@ -3,6 +3,14 @@ function updateDashboard(){
     IncomeList.updateList();
     Networth.updateNetworth();
 
+    // UI definitions:
+    IncomeList.cellID    = user.UI[0].toString().padStart(3, "0") + '-cell';
+    ExpenseList.cellID   = user.UI[1].toString().padStart(3, "0") + '-cell';
+    Networth.cellID      = user.UI[2].toString().padStart(3, "0") + '-cell';
+    IncomeRatios.cellID  = user.UI[3].toString().padStart(3, "0") + '-cell';
+    ExpenseRatios.cellID = user.UI[4].toString().padStart(3, "0") + '-cell';
+    Evolution.cellID     = user.UI[5].toString().padStart(3, "0") + '-cell';
+
     //Check to either show/hide modules:
     if ((user.expenses.length != 0) || (user.incomes.length != 0)){
 
@@ -43,18 +51,21 @@ function updateDashboard(){
             }
         }
 
+        ExpenseRatios.resize();
+        ExpenseList.resize();
+        IncomeList.resize();
+        IncomeRatios.resize();
+        Networth.resize();
+        Evolution.resize();  
+
         ExpenseRatios.pieChart.UpdateValues(expenseValues);
-        ExpenseRatios.resizeCanvas();
         ExpenseRatios.pieChart.Paint();
 
         IncomeRatios.pieChart.UpdateValues(incomeValues);
-        IncomeRatios.resizeCanvas();
         IncomeRatios.pieChart.Paint();
 
         Evolution.lineChart.UpdateValues(evolutionValues);
-        Evolution.resizeCanvas();
         Evolution.lineChart.Paint();
-        
     }
     else{
         ExpenseRatios.DOM.style.display = "none";
@@ -69,20 +80,6 @@ function updateDashboard(){
     for (i=0; i<user.expenses.length; i++){
         totalExpenses += parseInt(user.expenses[i].amount);
     }
-
-    // UI definitions:
-    IncomeList.DOM.style.left             = user.UI[0][0];
-    IncomeList.DOM.style.top              = user.UI[0][1];
-    ExpenseList.DOM.style.left            = user.UI[1][0];
-    ExpenseList.DOM.style.top             = user.UI[1][1];
-    Networth.DOM.style.left               = user.UI[2][0];
-    Networth.DOM.style.top                = user.UI[2][1];
-    IncomeRatios.DOM.style.left           = user.UI[3][0];
-    IncomeRatios.DOM.style.top            = user.UI[3][1];
-    ExpenseRatios.DOM.style.left          = user.UI[4][0];
-    ExpenseRatios.DOM.style.top           = user.UI[4][1];
-    Evolution.DOM.style.left              = user.UI[5][0];
-    Evolution.DOM.style.top               = user.UI[5][1];
 }
 
   
