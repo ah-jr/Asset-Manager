@@ -37,3 +37,23 @@ function showCells(){
         cells[i].style.display = "block";
     }
 }
+
+function isCellOccupied(ID){
+    if (ID >= cellNumX*cellNumY || ID < 0) return 1;
+
+    cellID = ID.toString().padStart(3, "0") + '-cell';
+    for (var i = 0; i<moduleList.length; i++){
+        if (moduleList[i].cellID === cellID) return 1;
+    }   
+    return 0;
+}
+
+function isThereCellToTheRight(ID){
+    if ((ID+1)%cellNumX == 0) return false;
+    else return true; 
+}
+
+function isThereCellToTheLeft(ID){
+    if (ID%cellNumX == 0) return false;
+    else return true; 
+}

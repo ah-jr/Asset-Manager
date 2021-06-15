@@ -17,17 +17,19 @@ function showModules(){
 function createModuleDOM (name, title, header, content){
     return  `
     <div class="module" id="` + name + `">
-        <!-- Header -->
-        <div id="`+ name +`-header">
-            ` + header + `
-        </div>   
-        <!-- Title -->
-        <div class="module-title">
-            <h2><b>` + title + `</b></h2>
-        </div>
-        <!-- Content -->
-        <div id="`+ name +`-content" style = "height: calc(100% - 100px);">
-            ` + content + `
+        <div class="module-container">
+            <!-- Header -->
+            <div id="`+ name +`-header">
+                ` + header + `
+            </div>   
+            <!-- Title -->
+            <div class="module-title">
+                <h2><b>` + title + `</b></h2>
+            </div>
+            <!-- Content -->
+            <div id="`+ name +`-content" style = "height: calc(100% - 100px);">
+                ` + content + `
+            </div>
         </div>
     </div>`;
 }
