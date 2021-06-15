@@ -23,3 +23,17 @@ function generateCells(width, height){
     $(cellsDiv).empty();
     $(cellsDiv).append(newBlock);
 }
+
+function hideCells(){
+    cells = document.getElementsByClassName('cell');
+    for(var i = 0; i < cells.length; i++){
+        cells[i].style.display = "none";
+    }
+}
+
+function showCells(){
+    cells = document.getElementsByClassName('cell');
+    for(var i = 0; i < cells.length; i++){
+        cells[i].style.display = "block";
+    }
+}

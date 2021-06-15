@@ -2,6 +2,7 @@ class ExpenseListModule{
     constructor(name, title){
         this.name = name;
         this.title = title;
+        this.type = EXPENSE_LIST_TYPE;
         this.canvasID = 'expense-list-canvas';
         this.cellID = '002-cell';
         this.DOM = this.createDOM();
@@ -20,11 +21,9 @@ class ExpenseListModule{
     }
     setMouseDown(){
         this.DOM.onmousedown = function(e){
-            dragType = EXPENSE_LIST_TYPE;
             if(!UI.chartFullscreen){
                 this.DOM.style.zIndex = "3";
                 dragValue   = this;
-                oldPosition = [dragValue.DOM.offsetLeft, dragValue.DOM.offsetTop];
                 xOffset     = dragValue.DOM.offsetLeft - e.pageX ;
                 yOffset     = dragValue.DOM.offsetTop - e.pageY ;
                 dragging    = true;
@@ -37,9 +36,9 @@ class ExpenseListModule{
         this.DOM.style.backgroundColor = '#f2f2f2';
         this.DOM.style.position        = 'absolute';
         this.DOM.style.border          = '1px solid';
-        this.DOM.style.borderColor     = '#f2f2f2';
-        this.DOM.style.borderRadius    = '3px';
-        this.DOM.style.boxShadow       = '0 0 4px #b0b0b0';
+        this.DOM.style.borderColor     = '#c2c2c2';
+        this.DOM.style.borderRadius    = '8px';
+        //this.DOM.style.boxShadow       = '0 0 4px #b0b0b0';
         this.DOM.style.transform       = 'translate(-50%, -50%)'; 
     }
     setMaximize(){
@@ -91,10 +90,14 @@ class ExpenseListModule{
         $('#' + this.name + '-content').empty();
         $('#' + this.name + '-content').append(newBlock);
     }
-    resize(){
+    resize(animate = true){
+        if(animate) this.DOM.style.transition = '0.2s ease';
+
         this.DOM.style.height = $("#"+this.cellID).height();
         this.DOM.style.width  = $("#"+this.cellID).width();
         this.DOM.style.left   = $("#"+this.cellID).position().left + $("#"+this.cellID).width()  * 0.5;
-        this.DOM.style.top    = $("#"+this.cellID).position().top  + $("#"+this.cellID).height() * 0.5
+        this.DOM.style.top    = $("#"+this.cellID).position().top  + $("#"+this.cellID).height() * 0.5;
+
+        if(animate) setTimeout(() => {this.DOM.style.transition = "0s"}, 210);
     }
 }

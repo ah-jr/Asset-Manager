@@ -9,14 +9,14 @@ class PieChart{
     constructor(element, x, y, radius, values){
         this.canvas = document.getElementById(element);
         this.values = values;
-        this.canvas.addEventListener('click', ClickEvent.bind(this), false);
+        this.canvas.addEventListener('click', clickEvent.bind(this), false);
 
         this.resize(x, y, radius);
 
-        function ClickEvent(e){
+        function clickEvent(e){
             var canvasCursorX = e.pageX - $('#' + element).offset().left;
             var canvasCursorY = e.pageY - $('#' + element).offset().top;
-            this.Paint(canvasCursorX, canvasCursorY);
+            this.paint(canvasCursorX, canvasCursorY);
         }
     }
 
@@ -32,7 +32,7 @@ class PieChart{
     //           Criação: 02/06/2021 Airton Junior
     //==================================================================
     
-    UpdateValues(values){
+    updateValues(values){
         this.values = values;
     }
 
@@ -42,14 +42,14 @@ class PieChart{
     //           Criação: 02/06/2021 Airton Junior
     //==================================================================
 
-    Paint(mouseX = 0, mouseY = 0){
+    paint(mouseX = 0, mouseY = 0){
         var ctx = this.canvas.getContext('2d');
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
        
         var size = this.values.length;
         var total = 0;
 
-        for (i=0;i<size;i++){
+        for (var i=0;i<size;i++){
            total = total + parseInt(this.values[i][0]); 
         }
 
@@ -65,7 +65,7 @@ class PieChart{
         var selectedIndex  = 0;
 
         // Desenha todos as seções:
-        for (i=0;i<size;i++){
+        for (var i=0;i<size;i++){
             finish = finish + minAngle*parseInt(this.values[i][0]);
             ctx.fillStyle = this.values[i][1];
 

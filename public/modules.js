@@ -16,7 +16,7 @@ function showModules(){
 
 function createModuleDOM (name, title, header, content){
     return  `
-    <div id="` + name + `">
+    <div class="module" id="` + name + `">
         <!-- Header -->
         <div id="`+ name +`-header">
             ` + header + `
@@ -30,4 +30,20 @@ function createModuleDOM (name, title, header, content){
             ` + content + `
         </div>
     </div>`;
+}
+
+function getModuleObjectByCellID(cellID){
+    for (var i = 0; i<moduleList.length; i++){
+        if (moduleList[i].cellID === cellID) return moduleList[i];
+    }   
+    return null;
+}
+
+function createModuleList(){
+    moduleList = [ExpenseRatios,
+                  IncomeRatios, 
+                  Evolution, 
+                  ExpenseList,
+                  IncomeList,
+                  Networth];
 }

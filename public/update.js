@@ -58,14 +58,14 @@ function updateDashboard(){
         Networth.resize();
         Evolution.resize();  
 
-        ExpenseRatios.pieChart.UpdateValues(expenseValues);
-        ExpenseRatios.pieChart.Paint();
+        ExpenseRatios.pieChart.updateValues(expenseValues);
+        ExpenseRatios.pieChart.paint();
 
-        IncomeRatios.pieChart.UpdateValues(incomeValues);
-        IncomeRatios.pieChart.Paint();
+        IncomeRatios.pieChart.updateValues(incomeValues);
+        IncomeRatios.pieChart.paint();
 
-        Evolution.lineChart.UpdateValues(evolutionValues);
-        Evolution.lineChart.Paint();
+        Evolution.lineChart.updateValues(evolutionValues);
+        Evolution.lineChart.paint();
     }
     else{
         ExpenseRatios.DOM.style.display = "none";

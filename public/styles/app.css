@@ -51,7 +51,7 @@
   border: 1px solid;
   border-color: #81818138;
   border-radius: 8px;
-  box-shadow: 0 0 10px gray; 
+  box-shadow: inset 0 0 10px gray; 
 }
 
 .expenses-list:after {
@@ -168,49 +168,6 @@
 #amount {
   position: relative;
   width: 80%;
-}
-
-
-#_0 {
-  width: 30%;
-  height: 40%;
-  left: 18%;
-  top: 25%;
-}
-
-#_1 {
-  width: 30%;
-  height: 40%;
-  left: 50%;
-  top: 25%;
-}
-
-#_2 {
-  width: 30%;
-  height: 40%;
-  left: 82%;
-  top: 25%;
-}
-
-#_3 {
-  width: 30%;
-  height: 40%;
-  left: 18%;
-  top: 70%;
-}
-
-#_4 {
-  width: 30%;
-  height: 40%;
-  left: 50%;
-  top: 70%;
-}
-
-#_5 {
-  width: 30%;
-  height: 40%;
-  left: 82%;
-  top: 70%;
 }
 
 /*Remove arrows in Number inputs*/

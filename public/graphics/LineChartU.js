@@ -31,7 +31,7 @@ class LineChart{
     //           Criação: 03/06/2021 Airton Junior
     //==================================================================
     
-    UpdateValues(values){
+    updateValues(values){
         this.values = values;
     }
 
@@ -41,7 +41,7 @@ class LineChart{
     //           Criação: 03/06/2021 Airton Junior
     //==================================================================
 
-    Paint(){
+    paint(){
         var ctx = this.canvas.getContext('2d');
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -49,7 +49,7 @@ class LineChart{
         var max = Number.MIN_VALUE;
         var min = Number.MAX_VALUE;
 
-        for(i=0;i<size;i++){
+        for(var i=0;i<size;i++){
             max = Math.max(this.values[i][0], max);
             min = Math.min(this.values[i][0], min);
         }

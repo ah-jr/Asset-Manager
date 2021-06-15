@@ -16,13 +16,10 @@ function initVariables(){
     cellsDiv   = document.getElementById('cells');
   
     // Variáves de interação com o mouse
-    dragType    = null;
     dragValue   = {};
     dragging    = false;
-    oldPosition = [];
     xOffset     = 0;
     yOffset     = 0;
-    draggin     = false;
 
     // Variáveis de interesse global: (talvez façam parte de um Manager no futuro)
     totalExpenses = 0;
@@ -38,6 +35,7 @@ function initVariables(){
     cellCount       = 0;
 
     // Módulos
+    moduleList    = [];
     ExpenseRatios = {};
     IncomeRatios  = {};
     Evolution     = {};

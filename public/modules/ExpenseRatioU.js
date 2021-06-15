@@ -2,6 +2,7 @@ class ExpenseRatioModule{
     constructor(name, title){
         this.name = name;
         this.title = title;
+        this.type = EXPENSE_RATIO_TYPE;
         this.canvasID = 'expense-ratio-canvas';
         this.cellID = '005-cell';
         this.DOM = this.createDOM();
@@ -27,11 +28,9 @@ class ExpenseRatioModule{
     }
     setMouseDown(){
         this.DOM.onmousedown = function(e){
-            dragType = EXPENSE_RATIO_TYPE;
             if(!UI.chartFullscreen){
                 this.DOM.style.zIndex = "3";
                 dragValue = this;
-                oldPosition = [dragValue.DOM.offsetLeft, dragValue.DOM.offsetTop];
                 xOffset = dragValue.DOM.offsetLeft - e.pageX ;
                 yOffset = dragValue.DOM.offsetTop - e.pageY ;
                 dragging = true;
@@ -43,9 +42,9 @@ class ExpenseRatioModule{
         this.DOM.style.backgroundColor = '#f2f2f2';
         this.DOM.style.position        = 'absolute';
         this.DOM.style.border          = '1px solid';
-        this.DOM.style.borderColor     = '#f2f2f2';
-        this.DOM.style.borderRadius    = '3px';
-        this.DOM.style.boxShadow       = '0 0 4px #b0b0b0';
+        this.DOM.style.borderColor     = '#c2c2c2';
+        this.DOM.style.borderRadius    = '8px';
+        //this.DOM.style.boxShadow       = '0 0 4px #b0b0b0';
         this.DOM.style.transform       = 'translate(-50%, -50%)';
     }
     setMaximize(){
@@ -73,7 +72,9 @@ class ExpenseRatioModule{
             }
         }.bind(this))
     }
-    resize(){
+    resize(animate = true){
+        if(animate) this.DOM.style.transition = '0.2s ease';
+
         this.DOM.style.height = $("#"+this.cellID).height();
         this.DOM.style.width  = $("#"+this.cellID).width();
         this.DOM.style.left   = $("#"+this.cellID).position().left + $("#"+this.cellID).width()  * 0.5;
@@ -84,5 +85,8 @@ class ExpenseRatioModule{
         this.pieChart.resize(this.canvasElement.width/2, 
                              this.canvasElement.height/2, 
                              Math.min(this.canvasElement.height, this.canvasElement.width)/2 - 10);
+        this.pieChart.paint();                    
+
+        if(animate) setTimeout(() => {this.DOM.style.transition = "0s"}, 210);                     
     }
 }

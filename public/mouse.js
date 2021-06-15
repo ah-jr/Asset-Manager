@@ -1,6 +1,7 @@
 function initMouse(){
     document.onmousemove = function(e){
         if(dragging){
+            showCells();
             dragValue.DOM.style.left = (e.pageX + xOffset) + "px";
             dragValue.DOM.style.top = (e.pageY + yOffset) + "px";
             dashboard.style.backgroundColor = "rgb(197, 197, 197)"
@@ -26,26 +27,22 @@ function initMouse(){
             dragValue.DOM.style.zIndex = "1"
             dashboard.style.backgroundColor = "white"
             page.style.backgroundColor = "rgb(221, 221, 221)"
-            var wWidth = dashboard.offsetWidth
-            var wHeight = dashboard.offsetHeight
-            var changed = false
+            var targetValue;
 
             for (i = 0; i<cells.length; i++){
                 if(Math.abs(cells[i].offsetLeft - dragValue.DOM.offsetLeft) < cellWidth/2 && 
                    Math.abs(cells[i].offsetTop - dragValue.DOM.offsetTop) < cellHeight/2)
                 {
-                    cells[i].style.backgroundColor = "white"
-                    dragValue.DOM.style.left = 100 - (100 * (wWidth - cells[i].offsetLeft) / wWidth) + "%" 
-                    dragValue.DOM.style.top = 100 - (100 * (wHeight - cells[i].offsetTop) / wHeight) + "%" 
+                    cells[i].style.backgroundColor = "white";
+
+                    targetValue = getModuleObjectByCellID(cells[i].id);
+                    if (targetValue != null) targetValue.cellID = dragValue.cellID;
+                    
                     dragValue.cellID = cells[i].id;
-                    changed = true
                 }
             }
-
-            if(!changed){
-                dragValue.DOM.style.left = oldPosition[0]
-                dragValue.DOM.style.top = oldPosition[1]
-            } 
+            if (targetValue != null) targetValue.resize();
+            dragValue.resize();
 
             $.ajax({
                 method: 'POST',
@@ -53,16 +50,33 @@ function initMouse(){
                 data: {
                     type : REQ_UI_MOVE_WINDOW,
                     windowCell: parseInt(dragValue.cellID.substring(0, 3)),
-                    windowType: dragType,
+                    windowType: dragValue.type,
                     ajax: 1
                 },
                 success: function(status){
                     user = status
-                    expenses = user.expenses
                 }
-            })    
-            dragValue = null
-            dragging = false
+            }) 
+
+            if (targetValue != null){
+                $.ajax({
+                    method: 'POST',
+                    url: "/index",
+                    data: {
+                        type : REQ_UI_MOVE_WINDOW,
+                        windowCell: parseInt(targetValue.cellID.substring(0, 3)),
+                        windowType: targetValue.type,
+                        ajax: 1
+                    },
+                    success: function(status){
+                        user = status
+                    }
+                })   
+            }
+              
+            dragValue = null;
+            dragging = false;
+            hideCells();
         }
         else{
             

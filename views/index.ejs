@@ -77,26 +77,30 @@ window.onload = function(){
     Networth = new NetworthModule('Networth', 'Your Balance');
     Networth.updateNetworth();
 
+    createModuleList();
     // Criação dos menus
     ExpenseMenu = new ExpenseCreationMenu();
 
     // Iniciar Dashboard
     updateDashboard();
     initMouse();
+    hideCells();
 }   
 
 window.onresize = function(){
     generateCells(cellNumX,cellNumY);
 
-    ExpenseRatios.resize();
-    ExpenseList.resize();
-    IncomeList.resize();
-    IncomeRatios.resize();
-    Networth.resize();
-    Evolution.resize();  
+    ExpenseRatios.resize(false);
+    ExpenseList.resize(false);
+    IncomeList.resize(false);
+    IncomeRatios.resize(false);
+    Networth.resize(false);
+    Evolution.resize(false);  
 
-    Evolution.lineChart.Paint(); 
-    ExpenseRatios.pieChart.Paint();
+    Evolution.lineChart.paint(); 
+    ExpenseRatios.pieChart.paint();
+    IncomeRatios.pieChart.paint();
+    hideCells();
 };
 
 $("#grid-x").change(function(){
